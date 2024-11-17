@@ -1,19 +1,22 @@
 <script setup>
-  import { ref, reactive, onMounted } from "vue"
+  import { ref, reactive, onMounted } from 'vue'
+  import Alerta from './components/Alerta.vue'
 
+  // States
   const coins = ref([
     { code: 'USD', text: 'United States Dollar'},
     { code: 'MXN', text: 'Peso Mexicano'},
     { code: 'EUR', text: 'Euro'},
     { code: 'GBP', text: 'Pound'},
   ])
-
   const cryptos = ref([])
   const calculate = reactive({
     coin: '',
     crypto: ''
   })
+  const error = ref('')
 
+  // OnMountes
   onMounted(() => {
     const url = 'https://min-api.cryptocompare.com/data/top/mktcapfull?limit=20&tsym=USD'
 
@@ -24,6 +27,18 @@
       // Data
       .then(({Data}) => cryptos.value = Data)
   })
+
+  // Functions
+  const calculateCrypto = () => {
+    if(Object.values(calculate).includes('')) {
+      error.value = 'All fields are required'
+      return
+    }
+
+    error.value = ''
+
+    
+  }
 </script>
 
 <template>
@@ -34,11 +49,16 @@
     </h1>
 
     <div class="contenido">
-      <form class="formulario">
+      <Alerta v-if="error"> {{ error }} </Alerta>
+
+      <form 
+        class="formulario"
+        @submit.prevent="calculateCrypto"
+      >
         <div class="campo">
           <label for="coin">Coin:</label>
 
-          <select 
+          <select
             id="coin"
             v-model="calculate.coin"  
           >
