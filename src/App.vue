@@ -32,9 +32,9 @@
     <div class="contenido">
       <form class="formulario">
         <div class="campo">
-          <label for="moneda">Coin:</label>
+          <label for="coin">Coin:</label>
 
-          <select id="moneda">
+          <select id="coin">
             <option value="">--Select--</option>
             <option
               v-for="coin in coins"
@@ -42,6 +42,20 @@
             >{{ coin.text }}</option>
           </select>
         </div>
+
+        <div class="campo">
+          <label for="cryptocurrency">Cryptocurrency:</label>
+
+          <select id="cryptocurrency">
+            <option value="">--Select--</option>
+            <option
+              v-for="crypto in cryptocurrency"
+              :value="crypto.CoinInfo.Name"
+            >{{ crypto.CoinInfo.FullName }}</option>
+          </select>
+        </div>
+
+        <input type="submit" value="Calculate">
       </form>
     </div>
   </div>
