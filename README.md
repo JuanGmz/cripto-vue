@@ -5,7 +5,7 @@ A modern web application designed to fetch and manage cryptocurrency price data 
 ## 🛠️ Built With  
 - **Vue 3**  
 - **Vite**  
-- **Axios** (for API consumption)  
+- **Fetch API** (for API consumption)  
 
 ## 🌟 Features  
 - View the latest cryptocurrency prices.  
