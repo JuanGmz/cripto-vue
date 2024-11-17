@@ -1,32 +1,45 @@
 <script setup>
-  import { ref } from "vue"
+  import { ref, onMounted } from "vue"
 
-  const monedas = ref([
-    { codigo: 'USD', texto: 'Dolar de Estados Unidos'},
-    { codigo: 'MXN', texto: 'Peso Mexicano'},
-    { codigo: 'EUR', texto: 'Euro'},
-    { codigo: 'GBP', texto: 'Libra Esterlina'},
+  const coins = ref([
+    { code: 'USD', text: 'United States Dollar'},
+    { code: 'MXN', text: 'Peso Mexicano'},
+    { code: 'EUR', text: 'Euro'},
+    { code: 'GBP', text: 'Pound'},
   ])
+
+  const cryptocurrency = ref([])
+
+  onMounted(() => {
+    const url = 'https://min-api.cryptocompare.com/data/top/mktcapfull?limit=20&tsym=USD'
+
+    // Get API
+    fetch(url)
+      // Get the response in JSON
+      .then(response => response.json())
+      // Data
+      .then(({Data}) => cryptocurrency.value = Data)
+  })
 </script>
 
 <template>
   <div class="contenedor">
     <h1 class="titulo">
-      Cotizador de 
-      <span>Criptomonedas</span>
+      <span>Cryptocurrency</span>
+      Price Calculator
     </h1>
 
     <div class="contenido">
       <form class="formulario">
         <div class="campo">
-          <label for="moneda">Moneda:</label>
+          <label for="moneda">Coin:</label>
 
           <select id="moneda">
-            <option value="">--Seleccione--</option>
+            <option value="">--Select--</option>
             <option
-              v-for="moneda in monedas"
-              :value="moneda.codigo"
-            >{{ moneda.texto }}</option>
+              v-for="coin in coins"
+              :value="coin.code"
+            >{{ coin.text }}</option>
           </select>
         </div>
       </form>
